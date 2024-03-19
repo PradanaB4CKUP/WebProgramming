@@ -2,20 +2,33 @@
 
 namespace App\Controllers;
 
+use App\Models\ModelUser;
+
 class LoginLogic extends BaseController
 {
     public function index(): string
     {
+        // Start the session before any output
+        //session_start();
+
         // Check if the form has been submitted
         if ($this->request->getMethod() === 'post') {
             // Retrieve user input from the form
             $emailOrPhone = $this->request->getPost('email');
             $password = $this->request->getPost('password');
+
+            session()->set('email', $emailOrPhone);
+            session()->set('password', $password);
             
             // Perform authentication - you would replace this with your actual authentication logic
             if ($this->authenticate($emailOrPhone, $password)) {
+                // Store only necessary information in the session
+                // $_SESSION['email'] = $emailData; // Retrieve email from authentication
+                // $_SESSION['password'] = $passwordData;
+
                 // Redirect to a dashboard or success page
-                return redirect()->to('/admin');
+                return view('/admin', $data);
+                //return redirect()->to('/admin');
             } else {
                 // Authentication failed, set flash message or display error
                 session()->setFlashdata('error', 'Invalid email/phone or password');
@@ -26,6 +39,7 @@ class LoginLogic extends BaseController
         return view('login');
     }
 
+    
 
     // Authentication logic - replace this with your actual authentication logic
     private function authenticate(string $emailOrPhone, string $password): bool
@@ -44,6 +58,4 @@ class LoginLogic extends BaseController
         }
     }
 
-    $emailOrPhone = $_SESSION['email']
-    $emailOrPhone = $_SESSION['password']
 }
