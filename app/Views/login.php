@@ -7,6 +7,7 @@
      <title>Login Form</title> 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
@@ -118,6 +119,30 @@
       form .signup-link a:hover{
         text-decoration: underline;
       }
+      /* The alert message box */
+      .alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      /* The close button */
+      .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      /* When moving the mouse over the close button */
+      .closebtn:hover {
+        color: black;
+      }
     </style>
   </head>
   <body>
@@ -125,18 +150,24 @@
       <div class="wrapper">
         <div class="title"><span>PUSTAKA BOOKING</span></div>
         <form action="/login" method="POST">
+          <?php if(session()->getFlashdata('error')) {?>
+            <div class="alert">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <?php echo session()->getFlashdata('error') ?>
+            </div>
+          <?php } ?>
           <div class="row">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Email or Phone" name="email" required>
-          </div>
-          <div class="row">
-            <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Password" name="password" required>
-          </div>
-          <div class="pass"><a href="#">Forgot password?</a></div>
-          <div class="row button">
-            <input type="submit" value="Login">
-          </div>
+                <i class="fas fa-user"></i>
+                <input type="text" placeholder="Email or Phone" name="email" value="<?php echo session()->getFlashdata('email')?>" required>
+              </div>
+              <div class="row">
+                <i class="fas fa-lock"></i>
+                <input type="password" placeholder="Password" name="password" required>
+              </div>
+              <div class="pass"><a href="#">Forgot password?</a></div>
+              <div class="row button">
+                <input type="submit" value="Login">
+            </div>
           <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
         </form>
       </div>

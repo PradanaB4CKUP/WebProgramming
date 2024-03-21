@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\ModelUser;
 
 class LoginLogic extends BaseController
 {
@@ -10,29 +9,51 @@ class LoginLogic extends BaseController
     {
         // Start the session before any output
         //session_start();
-
+        $MemberUser = new \App\Models\MemberUser();
         // Check if the form has been submitted
         if ($this->request->getMethod() === 'post') {
             // Retrieve user input from the form
             $emailOrPhone = $this->request->getPost('email');
             $password = $this->request->getPost('password');
 
-            session()->set('email', $emailOrPhone);
-            session()->set('password', $password);
+            // session()->set('email', $emailOrPhone);
+            // session()->set('password', $password);
             
             // Perform authentication - you would replace this with your actual authentication logic
-            if ($this->authenticate($emailOrPhone, $password)) {
-                // Store only necessary information in the session
-                // $_SESSION['email'] = $emailData; // Retrieve email from authentication
-                // $_SESSION['password'] = $passwordData;
-
-                // Redirect to a dashboard or success page
-                return view('/admin', $data);
-                //return redirect()->to('/admin');
-            } else {
-                // Authentication failed, set flash message or display error
-                session()->setFlashdata('error', 'Invalid email/phone or password');
+            // if ($userData = $this->authenticate($emailOrPhone, $password)) {
+            //     // Store only necessary information in the session
+            //     // $_SESSION['email'] = $emailData; // Retrieve email from authentication
+            //     // $_SESSION['password'] = $passwordData;
+            //     $data['userData'] = $userData;
+            //     // Redirect to a dashboard or success page
+            //     return redirect()->to('/admin', $data);
+            //     //return redirect()->to('/admin');
+            // }
+            if (empty($err)){
+                $dataUser = $MemberUser->where('email', $emailOrPhone)->first();
+                if ($dataUser['password']!= md5($password))
+                {
+                    $err = "Password tidak sesuai";
+                }
             }
+            if (empty($err)){
+                $dataSesi = [
+                    'email' => $dataUser['email'],
+                    'password' => $dataUser['password'],
+                ];
+                session()->set($dataSesi);
+                return redirect->to("MemberUser");
+            }
+            if ($err){
+                session()->setFlashdata('email', $emailOrPhone);
+                session()->setFlashdata('error', $err);
+                return redirect()->to('login');
+            }
+            // else {
+            //     // Authentication failed, set flash message or display error
+            //     $err = "Invalid email/phone or password";
+            //     //session()->setFlashdata('error', 'Invalid email/phone or password');
+            // }
         }
 
         // Load the login view

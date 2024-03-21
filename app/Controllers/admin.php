@@ -11,6 +11,11 @@ class admin extends BaseController
         return view('admin_page');
     }
 
+    public function logout()
+    {
+        session()->destroy();
+        return destroy()->to('login');
+    }
     public function adminController()
     {
         // Load the User model
