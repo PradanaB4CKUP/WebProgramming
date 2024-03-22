@@ -149,7 +149,7 @@
     <div class="container">
       <div class="wrapper">
         <div class="title"><span>PUSTAKA BOOKING</span></div>
-        <form action="/login" method="POST">
+        <form action="" method="POST">
           <?php if(session()->getFlashdata('error')) {?>
             <div class="alert">
               <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -166,7 +166,7 @@
               </div>
               <div class="pass"><a href="#">Forgot password?</a></div>
               <div class="row button">
-                <input type="submit" value="Login">
+                <input type="submit" name="login" value="login">
             </div>
           <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
         </form>

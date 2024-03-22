@@ -25,6 +25,7 @@ class Filters extends BaseConfig
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
         'khususMember'  => KhususMember::class,
+        'khususTamu'    => KhususTamu::class
     ];
 
     /**
