@@ -13,7 +13,7 @@ class KhususMember implements FilterInterface
         // Do something here
         // atau ganti dgn 'id'
         if (!session()->get('email')) {
-            return redirect()->to('login');
+            return redirect()->to('/login');
         }
     }
 

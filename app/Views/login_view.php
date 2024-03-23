@@ -166,7 +166,7 @@
               </div>
               <div class="pass"><a href="#">Forgot password?</a></div>
               <div class="row button">
-                <input type="submit" name="login" value="login">
+                <input type="submit" name="login">
             </div>
           <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
         </form>

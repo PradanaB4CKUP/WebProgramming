@@ -16,6 +16,9 @@ class Login extends BaseController
             // Retrieve user input from the form
             $emailOrPhone = $this->request->getPost('email');
             $password = $this->request->getPost('password');
+            if ($emailOrPhone == "" or $password == ""){
+                $err = "Silahkan masukkan username/email dan password";
+            }
 
             if (empty($err)){
                 $dataUser = $MemberUser->where('email', $emailOrPhone)->first();
@@ -30,7 +33,7 @@ class Login extends BaseController
                     'password' => $dataUser['password'],
                 ];
                 session()->set($dataSesi);
-                return redirect->to("/member");
+                return redirect->to("member");
             }
             if ($err){
                 session()->setFlashdata('email', $emailOrPhone);
